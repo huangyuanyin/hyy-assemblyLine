@@ -1,11 +1,17 @@
 <template>
-  <div class="flow-group-splitline" @click="handleAddStage">
-    <svg-icon iconName="icon-jiahao"></svg-icon>
+  <div class="flow-group-splitline" @mouseenter="isExitHover = true" @mouseleave="isExitHover = false" @click="handleAddStage">
+    <el-tooltip class="item" content="添加新的阶段" placement="top" :offset="18">
+      <svg-icon v-if="!isExitHover" iconName="icon-jiahao"></svg-icon>
+      <svg-icon v-else="isExitHover" iconName="icon-jiahao-copy-copy"></svg-icon>
+    </el-tooltip>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
+
 const emit = defineEmits(['add-stage'])
+const isExitHover = ref(false)
 
 const handleAddStage = () => {
   const name = window.prompt('请输入阶段名称', '新阶段')

@@ -1,5 +1,5 @@
 <template>
-  <el-button @click="handleAddFlow">添加流水线</el-button>
+  <el-link type="primary">添加流水线</el-link>
   <Lane :flows="data.flows" />
 </template>
 
@@ -21,8 +21,6 @@ const data = reactive({
     // }
   ]
 })
-
-const handleAddFlow = () => {}
 </script>
 
 <style lang="scss" scoped></style>

@@ -4,16 +4,22 @@
       <div class="job1">
         <svg-icon iconName="icon-shandian"></svg-icon>
       </div>
-      <template v-for="(parallel, index) of stage">
+      <template v-for="(parallel, index) of stage" :key="index">
         <div class="content-job">
-          <div class="job2" @click="handleAddParallel('before', index)">
-            <svg-icon iconName="icon-jiahao"></svg-icon>
+          <div class="job2" @mouseenter="isExitHover_one = true" @mouseleave="isExitHover_one = false" @click="handleAddParallel('before', index)">
+            <el-tooltip class="item" content="串行任务" placement="top" :offset="18">
+              <svg-icon v-if="!isExitHover_one" iconName="icon-jiahao"></svg-icon>
+              <svg-icon v-else="isExitHover_one" iconName="icon-jiahao-copy-copy"></svg-icon>
+            </el-tooltip>
           </div>
           <div class="job3" @dblclick="handleRemoveParallel(index)">
             {{ parallel.name }}
           </div>
-          <div class="job4" @click="handleAddParallel('after', index)">
-            <svg-icon iconName="icon-jiahao"></svg-icon>
+          <div class="job4" @mouseenter="isExitHover_two = true" @mouseleave="isExitHover_two = false" @click="handleAddParallel('after', index)">
+            <el-tooltip class="item" content="串行任务" placement="top" :offset="18">
+              <svg-icon v-if="!isExitHover_two" iconName="icon-jiahao"></svg-icon>
+              <svg-icon v-else="isExitHover_two" iconName="icon-jiahao-copy-copy"></svg-icon>
+            </el-tooltip>
           </div>
         </div>
       </template>
@@ -22,6 +28,8 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
+
 const props = defineProps({
   stage: {
     type: Object,
@@ -34,6 +42,9 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['removeStage'])
+const isExitHover_one = ref(false)
+const isExitHover_two = ref(false)
+
 const handleAddParallel = (position: any, index: any) => {
   index = position === 'before' ? index : index + 1
   props.stage.splice(index, 0, {
@@ -78,7 +89,9 @@ const handleRemoveParallel = (index: any) => {
     border-radius: 0 0 16px 16px;
   }
 }
+
 .task-container {
+  font-size: 14px;
   position: relative;
   display: flex;
   align-items: center;
@@ -92,14 +105,18 @@ const handleRemoveParallel = (index: any) => {
     width: 40px;
     height: 40px;
     background-color: #fff;
+    border: 1px solid #fff;
     border-radius: 50%;
     box-shadow: 0 2px 4px 0 rgb(38 38 38 / 10%);
     z-index: 2;
-
     > svg {
       width: 20px;
       height: 20px;
     }
+  }
+
+  .job1:hover {
+    border: 1px solid #1b9aee;
   }
 
   .content-job {
@@ -107,10 +124,16 @@ const handleRemoveParallel = (index: any) => {
     align-items: center;
     margin-left: 10px;
     margin-right: 10px;
+    .job3 {
+      border: 1px solid #fff;
+    }
     // position: absolute;
     // left: 50px;
 
     &:hover {
+      .job3 {
+        border: 1px solid #1b9aee;
+      }
       .job2,
       .job4 {
         opacity: 1;
@@ -152,3 +175,5 @@ const handleRemoveParallel = (index: any) => {
   }
 }
 </style>
+
+<style lang="scss"></style>

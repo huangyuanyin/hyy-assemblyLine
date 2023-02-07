@@ -1,19 +1,24 @@
 <template>
   <div class="add-stage-container">
-    <div class="add-stage" @click="handleAddParaller">
-      <svg-icon iconName="icon-jiahao"></svg-icon>
+    <div class="add-stage" @mouseenter="isExitHover = true" @mouseleave="isExitHover = false" @click="handleAddParaller">
+      <svg-icon v-if="!isExitHover" iconName="icon-jiahao"></svg-icon>
+      <svg-icon v-else="isExitHover" iconName="icon-jiahao-copy-copy"></svg-icon>
       并行任务
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
+
 const props = defineProps({
   stages: {
     type: Array,
     required: true
   }
 })
+
+const isExitHover = ref(false)
 
 const handleAddParaller = () => {
   props.stages.push([
@@ -29,7 +34,7 @@ const handleAddParaller = () => {
   position: relative;
   height: 60px;
   opacity: 0;
-
+  font-size: 14px;
   &::before {
     content: '';
     position: absolute;
@@ -41,6 +46,16 @@ const handleAddParaller = () => {
     width: 100%;
     height: 100%;
     border-radius: 0 0 16px 16px;
+  }
+}
+.add-stage-container:hover {
+  &::before {
+    border-left: 1px solid #1b9aee;
+    border-right: 1px solid #1b9aee;
+    border-bottom: 1px solid #1b9aee;
+  }
+  .add-stage {
+    border: 1px solid #1b9aee;
   }
 }
 .add-stage {
