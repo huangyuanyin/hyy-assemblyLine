@@ -2,7 +2,12 @@
   <div class="stage">
     <div class="task-container">
       <div class="job1">
-        <svg-icon iconName="icon-shandian"></svg-icon>
+        <el-tooltip class="item" content="自动触发" placement="top" :offset="20">
+          <svg-icon v-show="automatic" iconName="icon-shandian" @click="triggerMethod(false)"></svg-icon>
+        </el-tooltip>
+        <el-tooltip class="item" content="手动触发" placement="top" :offset="20">
+          <svg-icon v-show="!automatic" iconName="icon-shoushoushi" @click="triggerMethod(true)"></svg-icon>
+        </el-tooltip>
       </div>
       <template v-for="(parallel, index) of stage" :key="index">
         <div class="content-job">
@@ -44,6 +49,7 @@ const props = defineProps({
 const emit = defineEmits(['removeStage'])
 const isExitHover_one = ref(false)
 const isExitHover_two = ref(false)
+const automatic = ref(true)
 
 const handleAddParallel = (position: any, index: any) => {
   index = position === 'before' ? index : index + 1
@@ -58,6 +64,10 @@ const handleRemoveParallel = (index: any) => {
   } else {
     emit('removeStage')
   }
+}
+
+const triggerMethod = (value: boolean) => {
+  automatic.value = value
 }
 </script>
 

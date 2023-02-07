@@ -5,26 +5,36 @@
       <svg-icon v-else="isExitHover" iconName="icon-jiahao-copy-copy"></svg-icon>
     </el-tooltip>
   </div>
+  <GroupDrawer :drawer="drawer" @changeDrawer="changeDrawer" />
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import GroupDrawer from '@/components/GroupDrawer.vue'
 
 const emit = defineEmits(['add-stage'])
 const isExitHover = ref(false)
+const drawer = ref(false)
 
 const handleAddStage = () => {
-  const name = window.prompt('请输入阶段名称', '新阶段')
-  emit('add-stage', {
-    name,
-    stages: [
-      [
-        {
-          name: '并行1'
-        }
+  drawer.value = true
+}
+
+const changeDrawer = (value: any) => {
+  drawer.value = value[0]
+  if (!drawer.value) {
+    const name = value[1]
+    emit('add-stage', {
+      name,
+      stages: [
+        [
+          {
+            name: '并行1'
+          }
+        ]
       ]
-    ]
-  })
+    })
+  }
 }
 </script>
 
