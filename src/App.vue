@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <el-button>dad</el-button>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script setup lang="ts"></script>
