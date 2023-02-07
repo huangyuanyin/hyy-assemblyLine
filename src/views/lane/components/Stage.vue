@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, nextTick } from 'vue'
+import { ref } from 'vue'
 import TaskDetailDrawer from '@/components/TaskDetailDrawer.vue'
 
 const props = defineProps({
@@ -54,7 +54,7 @@ const isExitHover_two = ref(false)
 const automatic = ref(true)
 const taskDetailDrawer = ref(false)
 const taskDetailName = ref('')
-const taskId = ref(null)
+const taskId = ref('')
 
 const handleAddParallel = (position: any, index: any) => {
   index = position === 'before' ? index : index + 1
@@ -84,7 +84,7 @@ const openTaskDetailDrawer = (value: any, id: any) => {
 
 const closeDrawer = (value?: any) => {
   if (value[1]) {
-    props.stage.name = value[1].name
+    props.stage[taskId.value].name = value[1].name
   }
   taskDetailDrawer.value = value[0]
 }
