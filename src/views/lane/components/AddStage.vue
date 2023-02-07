@@ -52,7 +52,8 @@ const handleAddParaller = () => {
   padding: 0 12px;
   color: #292929;
   border-radius: 20px;
-  background-color: #fff;
+  background-color: #f2f5f7;
+  border: 1px solid #beb8bf;
   z-index: 2;
   cursor: pointer;
   box-shadow: 0 2px 4px 0 rgb(38 38 38 / 10%);

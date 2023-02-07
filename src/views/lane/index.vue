@@ -35,6 +35,7 @@ const handleRemoveFlow = (index: any) => {
   width: 100vw;
   height: 100vh;
   overflow-y: auto;
+  background-color: #f2f5f7;
 }
 .flow-groups {
   display: flex;

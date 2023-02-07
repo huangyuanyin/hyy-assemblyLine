@@ -1,15 +1,17 @@
 <template>
   <div class="flow-group">
     <div class="group-head">
-      <div class="editor">
+      <div class="name">
         <span v-if="!data.isEditor">{{ flow.name }}</span>
-        <input v-else type="text" :value="data.value" @input="handleInput" />
+        <el-input v-else type="text" v-model="data.value" @input="handleInput"></el-input>
       </div>
-      <button @click="handleEditor">
-        {{ data.isEditor ? '保存' : '编辑' }}
-      </button>
-      &nbsp;
-      <button @click="$emit('remove-flow')">删除</button>
+      <div class="editor">
+        <el-icon @click="handleEditor" v-if="data.isEditor"><Check /></el-icon>
+        <el-icon @click="handleEditor" v-else><Edit /></el-icon>
+      </div>
+      <div class="delete">
+        <el-icon @click="$emit('remove-flow')"><Delete /></el-icon>
+      </div>
     </div>
     <div class="stages">
       <Stage v-for="(stage, index) in flow.stages" :stage="stage" :flow="flow" @removeStage="handleRemoveStage(index)" />
@@ -17,10 +19,12 @@
     </div>
   </div>
 </template>
+
 <script lang="ts" setup>
 import { reactive } from 'vue'
 import Stage from './Stage.vue'
 import AddStage from './AddStage.vue'
+import { Delete, Check, Edit } from '@element-plus/icons-vue'
 
 const props = defineProps({
   flow: {
@@ -37,9 +41,11 @@ const data = reactive({
 const handleRemoveStage = (index: any) => {
   props.flow.stages.splice(index, 1)
 }
+
 const handleInput = (e: any) => {
-  data.value = e.target.value
+  data.value = e
 }
+
 const handleEditor = () => {
   if (data.isEditor) {
     data.isEditor = false
@@ -70,5 +76,14 @@ const handleEditor = () => {
   padding: 0 20px;
   height: 22px;
   margin-bottom: 28px;
+  align-items: center;
+  .name {
+    span {
+      color: #8b8b8b;
+    }
+  }
+  .editor {
+    margin: 0 5px;
+  }
 }
 </style>

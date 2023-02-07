@@ -59,6 +59,7 @@ const handleAddStage = () => {
     margin-left: -10px;
     z-index: 2;
     cursor: pointer;
+    color: #595959;
   }
 }
 </style>
