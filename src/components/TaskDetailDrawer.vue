@@ -110,6 +110,9 @@ const deleteTask = () => {
     padding-left: 32px;
     height: 60px;
     margin-bottom: 0px;
+    .el-icon:hover {
+      cursor: pointer;
+    }
   }
   span {
     font-weight: 500;

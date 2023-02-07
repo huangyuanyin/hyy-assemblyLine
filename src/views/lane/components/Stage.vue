@@ -69,16 +69,8 @@ const handleRemoveParallel = (id: any) => {
   } else {
     emit('removeStage')
   }
+  closeDrawer([false])
 }
-
-watch(
-  () => props.flow,
-  () => {
-    if (props.flow.stages.length === 0) {
-      console.log(`output-`)
-    }
-  }
-)
 
 const triggerMethod = (value: boolean) => {
   automatic.value = value
@@ -90,10 +82,9 @@ const openTaskDetailDrawer = (value: any, id: any) => {
   taskDetailName.value = value
 }
 
-const closeDrawer = (value: any) => {
+const closeDrawer = (value?: any) => {
   if (value[1]) {
     props.stage.name = value[1].name
-    console.log(`output->props.stage.name`, props.stage.name)
   }
   taskDetailDrawer.value = value[0]
 }
