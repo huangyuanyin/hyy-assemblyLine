@@ -1,5 +1,5 @@
 <template>
-  <el-drawer v-model="ishowDrawer" direction="rtl" class="group-drawer">
+  <el-drawer v-model="ishowDrawer" direction="rtl" class="group-drawer" @close="closeDrawer">
     <template #header>
       <span class="select_group">选择任务组</span>
     </template>
@@ -57,6 +57,10 @@ watch(
 
 const addStage = () => {
   emit('changeDrawer', [false, data.name])
+}
+
+const closeDrawer = () => {
+  emit('changeDrawer', false)
 }
 </script>
 

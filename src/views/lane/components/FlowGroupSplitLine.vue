@@ -5,12 +5,12 @@
       <svg-icon v-else="isExitHover" iconName="icon-jiahao-copy-copy"></svg-icon>
     </el-tooltip>
   </div>
-  <GroupDrawer :drawer="drawer" @changeDrawer="changeDrawer" />
+  <TaskGroupDrawer :drawer="drawer" @changeDrawer="changeDrawer" />
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import GroupDrawer from '@/components/GroupDrawer.vue'
+import TaskGroupDrawer from '@/components/TaskGroupDrawer.vue'
 
 const emit = defineEmits(['add-stage'])
 const isExitHover = ref(false)
@@ -21,6 +21,7 @@ const handleAddStage = () => {
 }
 
 const changeDrawer = (value: any) => {
+  if (!value) return (drawer.value = value)
   drawer.value = value[0]
   if (!drawer.value) {
     const name = value[1]

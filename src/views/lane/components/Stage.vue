@@ -9,7 +9,7 @@
           <svg-icon v-show="!automatic" iconName="icon-shoushoushi" @click="triggerMethod(true)"></svg-icon>
         </el-tooltip>
       </div>
-      <template v-for="(parallel, index) of stage" :key="index">
+      <template v-for="(parallel, index) of stage">
         <div class="content-job">
           <div class="job2" @mouseenter="isExitHover_one = true" @mouseleave="isExitHover_one = false" @click="handleAddParallel('before', index)">
             <el-tooltip class="item" content="串行任务" placement="top" :offset="18">
@@ -17,7 +17,7 @@
               <svg-icon v-else="isExitHover_one" iconName="icon-jiahao-copy-copy"></svg-icon>
             </el-tooltip>
           </div>
-          <div class="job3" @dblclick="handleRemoveParallel(index)">
+          <div class="job3" @click="openTaskDetailDrawer(parallel.name, index)">
             {{ parallel.name }}
           </div>
           <div class="job4" @mouseenter="isExitHover_two = true" @mouseleave="isExitHover_two = false" @click="handleAddParallel('after', index)">
@@ -30,10 +30,12 @@
       </template>
     </div>
   </div>
+  <TaskDetailDrawer :taskDetailName="taskDetailName" :taskDetailDrawer="taskDetailDrawer" @closeDrawer="closeDrawer" @deleteTask="handleRemoveParallel(taskId)" />
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watch, nextTick } from 'vue'
+import TaskDetailDrawer from '@/components/TaskDetailDrawer.vue'
 
 const props = defineProps({
   stage: {
@@ -50,6 +52,9 @@ const emit = defineEmits(['removeStage'])
 const isExitHover_one = ref(false)
 const isExitHover_two = ref(false)
 const automatic = ref(true)
+const taskDetailDrawer = ref(false)
+const taskDetailName = ref('')
+const taskId = ref(null)
 
 const handleAddParallel = (position: any, index: any) => {
   index = position === 'before' ? index : index + 1
@@ -58,16 +63,39 @@ const handleAddParallel = (position: any, index: any) => {
   })
 }
 
-const handleRemoveParallel = (index: any) => {
+const handleRemoveParallel = (id: any) => {
   if (props.stage.length > 1) {
-    props.stage.splice(index, 1)
+    props.stage.splice(id, 1)
   } else {
     emit('removeStage')
   }
 }
 
+watch(
+  () => props.flow,
+  () => {
+    if (props.flow.stages.length === 0) {
+      console.log(`output-`)
+    }
+  }
+)
+
 const triggerMethod = (value: boolean) => {
   automatic.value = value
+}
+
+const openTaskDetailDrawer = (value: any, id: any) => {
+  taskId.value = id
+  taskDetailDrawer.value = true
+  taskDetailName.value = value
+}
+
+const closeDrawer = (value: any) => {
+  if (value[1]) {
+    props.stage.name = value[1].name
+    console.log(`output->props.stage.name`, props.stage.name)
+  }
+  taskDetailDrawer.value = value[0]
 }
 </script>
 

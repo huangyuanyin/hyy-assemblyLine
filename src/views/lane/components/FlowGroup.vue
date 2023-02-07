@@ -26,6 +26,8 @@ import Stage from './Stage.vue'
 import AddStage from './AddStage.vue'
 import { Delete, Check, Edit } from '@element-plus/icons-vue'
 
+const emit = defineEmits(['removeFlow'])
+
 const props = defineProps({
   flow: {
     type: Object,
@@ -39,6 +41,9 @@ const data = reactive({
 })
 
 const handleRemoveStage = (index: any) => {
+  if (props.flow.stages.length === 1) {
+    return emit('removeFlow')
+  }
   props.flow.stages.splice(index, 1)
 }
 
