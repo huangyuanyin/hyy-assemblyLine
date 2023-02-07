@@ -1,6 +1,9 @@
 <template>
   <div class="add-stage-container">
-    <div class="add-stage" @click="handleAddParaller">并行任务</div>
+    <div class="add-stage" @click="handleAddParaller">
+      <svg-icon iconName="icon-jiahao"></svg-icon>
+      并行任务
+    </div>
   </div>
 </template>
 
@@ -57,5 +60,8 @@ const handleAddParaller = () => {
   z-index: 2;
   cursor: pointer;
   box-shadow: 0 2px 4px 0 rgb(38 38 38 / 10%);
+  svg {
+    margin-right: 5px;
+  }
 }
 </style>
