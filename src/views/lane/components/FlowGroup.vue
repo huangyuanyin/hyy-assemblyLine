@@ -1,16 +1,16 @@
 <template>
-  <div class="flow-group">
+  <div class="flow-group" @mouseenter="isShowIcon = true" @mouseleave="isShowIcon = false">
     <div class="group-head">
       <div class="name">
         <span v-if="!data.isEditor">{{ flow.name }}</span>
         <el-input v-else type="text" v-model="data.value" @input="handleInput"></el-input>
       </div>
-      <div class="editor">
-        <el-icon @click="handleEditor" v-if="data.isEditor"><Check /></el-icon>
-        <el-icon @click="handleEditor" v-else><Edit /></el-icon>
+      <div class="editor" v-show="isShowIcon">
+        <svg-icon @click="handleEditor" v-if="data.isEditor" iconName="icon-danduduihao"></svg-icon>
+        <svg-icon @click="handleEditor" v-else iconName="icon-bianji"></svg-icon>
       </div>
-      <div class="delete">
-        <el-icon @click="$emit('remove-flow')"><Delete /></el-icon>
+      <div class="delete" v-show="isShowIcon">
+        <svg-icon @click="$emit('remove-flow')" iconName="icon-changyonggoupiaorenshanchu"></svg-icon>
       </div>
     </div>
     <div class="stages">
@@ -21,10 +21,9 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import Stage from './Stage.vue'
 import AddStage from './AddStage.vue'
-import { Delete, Check, Edit } from '@element-plus/icons-vue'
 
 const emit = defineEmits(['removeFlow'])
 
@@ -39,6 +38,7 @@ const data = reactive({
   isEditor: false,
   value: props.flow.name
 })
+const isShowIcon = ref(false)
 
 const handleRemoveStage = (index: any) => {
   if (props.flow.stages.length === 1) {
@@ -88,7 +88,11 @@ const handleEditor = () => {
     }
   }
   .editor {
-    margin: 0 5px;
+    margin: 0 10px;
+  }
+  .editor,
+  .delete:hover {
+    cursor: pointer;
   }
 }
 </style>

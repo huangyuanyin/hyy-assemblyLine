@@ -11,7 +11,10 @@
     <template #header>
       <div class="header">
         <span class="">编辑</span>
-        <el-icon @click="deleteTask"><Delete /></el-icon>
+        <div class="changeDelete">
+          <svg-icon class="grayDelete" @click="deleteTask" iconName="icon-changyonggoupiaorenshanchu"></svg-icon>
+          <svg-icon class="redDelete" @click="deleteTask" iconName="icon-changyonggoupiaorenshanchu-copy"></svg-icon>
+        </div>
       </div>
     </template>
     <template #default>
@@ -110,8 +113,23 @@ const deleteTask = () => {
     padding-left: 32px;
     height: 60px;
     margin-bottom: 0px;
-    .el-icon:hover {
+    svg:hover {
       cursor: pointer;
+    }
+    .changeDelete {
+      display: inline-block;
+    }
+    .changeDelete .grayDelete {
+      display: inline-block;
+    }
+    .changeDelete .redDelete {
+      display: none;
+    }
+    .changeDelete:hover .grayDelete {
+      display: none;
+    }
+    .changeDelete:hover .redDelete {
+      display: inline-block;
     }
   }
   span {

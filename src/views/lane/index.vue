@@ -33,7 +33,7 @@ const handleRemoveFlow = (index: any) => {
 <style lang="scss" scoped>
 .flow-groups-container {
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 23px);
   overflow-y: auto;
   background-color: #f2f5f7;
 }

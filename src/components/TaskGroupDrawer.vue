@@ -8,7 +8,7 @@
       <el-tabs tab-position="left" style="height: calc(100vh - 185px); margin-top: 20px" class="group-tabs">
         <el-tab-pane label="代码扫描">
           <span class="group-name">代码扫描</span>
-          <el-card class="group-name-item" shadow="hover" @click="addStage">
+          <el-card class="group-name-item" shadow="hover" @click="addStage(data)">
             <div class="group-name-item-detail">
               <img src="https://img.alicdn.com/tfs/TB17eM4wFT7gK0jSZFpXXaTkpXa-88-88.png" alt="" />
               <div class="group-name-item-detail-right">
@@ -18,7 +18,18 @@
             </div>
           </el-card>
         </el-tab-pane>
-        <el-tab-pane label="测试">测试</el-tab-pane>
+        <el-tab-pane label="测试">
+          <span class="group-name">测试</span>
+          <el-card class="group-name-item" shadow="hover" @click="addStage(data2)">
+            <div class="group-name-item-detail">
+              <img src="https://img.alicdn.com/tfs/TB17eM4wFT7gK0jSZFpXXaTkpXa-88-88.png" alt="" />
+              <div class="group-name-item-detail-right">
+                <span class="detail-name">{{ data2.name }}</span>
+                <p>{{ data2.desc }}</p>
+              </div>
+            </div>
+          </el-card>
+        </el-tab-pane>
         <el-tab-pane label="构建">构建</el-tab-pane>
         <el-tab-pane label="测试构建">测试构建</el-tab-pane>
         <el-tab-pane label="镜像构建">镜像构建</el-tab-pane>
@@ -48,6 +59,11 @@ const data = reactive({
   desc: '这是一段代码扫描代码扫描'
 })
 
+const data2 = reactive({
+  name: 'Python单元测试',
+  desc: '这是一段Python单元测试'
+})
+
 watch(
   () => props.drawer,
   () => {
@@ -55,8 +71,8 @@ watch(
   }
 )
 
-const addStage = () => {
-  emit('changeDrawer', [false, data.name])
+const addStage = (value: any) => {
+  emit('changeDrawer', [false, value.name])
 }
 
 const closeDrawer = () => {
