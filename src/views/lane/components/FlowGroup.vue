@@ -10,7 +10,7 @@
         <svg-icon @click="handleEditor" v-else iconName="icon-bianji"></svg-icon>
       </div>
       <div class="delete" v-show="isShowIcon">
-        <svg-icon @click="$emit('remove-flow')" iconName="icon-changyonggoupiaorenshanchu"></svg-icon>
+        <svg-icon @click="openDeleteGroupDialog" iconName="icon-changyonggoupiaorenshanchu"></svg-icon>
       </div>
     </div>
     <div class="stages">
@@ -18,12 +18,20 @@
       <AddStage :stages="flow.stages" />
     </div>
   </div>
+  <DeleteGroupDialog :flowName="flowName" :show="isShowDeleteGroupDialog" @closeDeleteDialog="closeDeleteDialog" @submitDelete="submitDelete">
+    <span>确定删除【{{ flowName }}】阶段吗？</span>
+    <div class="deleteTips">
+      <span class="tips">注意：</span>
+      <span class="desc">删除后该阶段下的所有任务都将删除!</span>
+    </div>
+  </DeleteGroupDialog>
 </template>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import Stage from './Stage.vue'
 import AddStage from './AddStage.vue'
+import DeleteGroupDialog from '@/components/DeleteGroupDialog.vue'
 
 const emit = defineEmits(['removeFlow'])
 
@@ -39,6 +47,8 @@ const data = reactive({
   value: props.flow.name
 })
 const isShowIcon = ref(false)
+const isShowDeleteGroupDialog = ref(false)
+const flowName = ref('')
 
 const handleRemoveStage = (index: any) => {
   if (props.flow.stages.length === 1) {
@@ -59,6 +69,20 @@ const handleEditor = () => {
   }
   data.isEditor = true
   data.value = props.flow.name
+}
+
+const openDeleteGroupDialog = () => {
+  isShowDeleteGroupDialog.value = true
+  flowName.value = data.value
+}
+
+const closeDeleteDialog = (val: any) => {
+  isShowDeleteGroupDialog.value = val
+}
+
+const submitDelete = () => {
+  isShowDeleteGroupDialog.value = false
+  emit('removeFlow')
 }
 </script>
 
@@ -93,6 +117,18 @@ const handleEditor = () => {
   .editor,
   .delete:hover {
     cursor: pointer;
+  }
+}
+
+.deleteTips {
+  margin-top: 10px;
+  color: red;
+  .tips {
+    font-size: 16px;
+    font-weight: 800;
+  }
+  .desc {
+    font-size: 14px;
   }
 }
 </style>
