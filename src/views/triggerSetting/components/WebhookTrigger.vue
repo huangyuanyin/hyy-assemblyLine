@@ -8,7 +8,7 @@
     <div class="next-form-item">
       <el-input v-model="input" placeholder="Please input">
         <template #append>
-          <el-button :icon="CopyDocument"></el-button>
+          <el-button :icon="CopyDocument" v-copy="input"></el-button>
         </template>
       </el-input>
     </div>

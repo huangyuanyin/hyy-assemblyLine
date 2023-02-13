@@ -39,7 +39,7 @@ import { ref } from 'vue'
 
 const formLabelAlign = ref({
   triggerMethod: 'cycle',
-  date: [],
+  date: <any>[],
   region: '',
   Intervals: '5',
   checked: false
@@ -63,11 +63,9 @@ const weeks = ref([
   { label: '周七', value: '7', active: false }
 ])
 
-const selectTriggerMethod = () => {}
-
 const selectWeek = (val: Object, index: number) => {
   weeks.value[index].active = !weeks.value[index].active // 选中日期筛选标签
-  var arr = [] // 定义空数组，接收遍历的值
+  var arr = [] as any // 定义空数组，接收遍历的值
   weeks.value.forEach((item) => {
     if (item.active) {
       // 筛选active为true的加到arr中

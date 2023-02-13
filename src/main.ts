@@ -8,6 +8,9 @@ import './assets/iconfont/iconfont.js'
 
 const app = createApp(App)
 
+import copys from './directives/v-copy.js'
+app.directive('copy', copys)
+
 app.component('SvgIcon', SvgIcon)
 app.use(router)
 
