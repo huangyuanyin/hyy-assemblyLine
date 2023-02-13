@@ -23,8 +23,9 @@
       </el-row>
     </div>
     <div class="lan-container">
-      <basicInformation v-if="tabName === 'basicInformation'" />
+      <BasicInformation v-if="tabName === 'basicInformation'" />
       <Lane v-if="tabName === 'processConfig'" :flows="data.flows" />
+      <TriggerSetting v-if="tabName === 'triggerSetting'" />
     </div>
   </div>
 </template>
@@ -32,7 +33,8 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
 import Lane from './lane/index.vue'
-import basicInformation from './basicInformation/index.vue'
+import BasicInformation from './basicInformation/index.vue'
+import TriggerSetting from './triggerSetting/index.vue'
 
 const tabName = ref('basicInformation')
 const data = reactive({
