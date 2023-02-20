@@ -26,6 +26,7 @@
       <BasicInformation v-if="tabName === 'basicInformation'" />
       <Lane v-if="tabName === 'processConfig'" :flows="data.flows" />
       <TriggerSetting v-if="tabName === 'triggerSetting'" />
+      <VariableCache v-if="tabName === 'variableCache'" />
     </div>
   </div>
 </template>
@@ -35,6 +36,7 @@ import { ref, reactive } from 'vue'
 import Lane from './lane/index.vue'
 import BasicInformation from './basicInformation/index.vue'
 import TriggerSetting from './triggerSetting/index.vue'
+import VariableCache from './variablesCache/index.vue'
 
 const tabName = ref('basicInformation')
 const data = reactive({

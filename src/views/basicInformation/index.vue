@@ -2,7 +2,7 @@
   <div class="basicInformation-wrap">
     <el-card shadow="never">
       <div class="header">
-        <span>任务信息</span>
+        <span>流水线信息</span>
       </div>
       <div class="content">
         <el-form
@@ -12,14 +12,32 @@
           label-width="120px"
           class="basicInformation-ruleForm"
           size="default"
+          label-position="top"
+          style="max-width: 560px"
           status-icon
         >
-          <el-form-item label="任务名称" prop="name">
-            <el-input v-model="basicInformationForm.name" placeholder="请输入任务名称..." />
+          <el-form-item label="流水线名称">
+            <el-input v-model="basicInformationForm.name" placeholder="请输入流水线名称..." />
+          </el-form-item>
+          <el-form-item label="流水线ID">
+            <el-input v-model="basicInformationForm.id" placeholder="Please input" disabled>
+              <template #append>
+                <el-button :icon="CopyDocument" v-copy="basicInformationForm.id"></el-button>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="环境">
+            <el-select v-model="basicInformationForm.environment" placeholder="">
+              <el-option :label="item.label" :value="item.value" v-for="(item, index) in environmentList" :key="'environmentList' + index" />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="分组">
+            <el-select v-model="basicInformationForm.group" placeholder="0">
+              <el-option :label="item.label" :value="item.value" v-for="(item, index) in groupList" :key="'groupList' + index" />
+            </el-select>
           </el-form-item>
           <el-form-item>
             <el-button type="danger" @click="resetForm(basicInformationFormRef)">删除任务</el-button>
-            <el-button type="primary" @click="submitForm(basicInformationFormRef)"> 保存 </el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -30,25 +48,27 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
+import { CopyDocument } from '@element-plus/icons-vue'
 
+const environmentList = ref([
+  { label: '无', value: 'no' },
+  { label: '日常环境', value: 'daily' },
+  { label: '预发环境', value: 'advance' },
+  { label: '正式环境', value: 'formal' }
+])
+const groupList = ref([{ label: '无选项', value: 'no' }])
 const basicInformationFormRef = ref<FormInstance>()
 const basicInformationForm = reactive({
-  name: ''
+  name: '',
+  id: 'xc5977k9cnumqdow',
+  environment: 'no',
+  group: ''
 })
 const basicInformationRules = reactive<FormRules>({
-  name: [{ required: true, message: '请输入任务名称...', trigger: 'blur' }]
+  name: [{ required: true, message: '请输入流水线名称...', trigger: 'blur' }],
+  environment: [{ required: true, message: '请选择环境', trigger: 'change' }],
+  group: [{ required: true, message: '请选择分组', trigger: 'change' }]
 })
-
-const submitForm = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      console.log('submit!')
-    } else {
-      console.log('error submit!', fields)
-    }
-  })
-}
 
 const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
@@ -82,7 +102,15 @@ const resetForm = (formEl: FormInstance | undefined) => {
     }
   }
   .content {
-    padding: 30px 40px 0 0px;
+    padding: 30px 40px 0 17px;
+    .basicInformation-ruleForm {
+      .el-input-group__append .el-button {
+        font-size: 16px;
+        &:hover {
+          color: #1b9aee;
+        }
+      }
+    }
   }
 }
 </style>

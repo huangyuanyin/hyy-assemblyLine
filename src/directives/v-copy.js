@@ -21,16 +21,16 @@ const copy = (el, binding) => {
       // 创建输入框
       var textarea = document.createElement('textarea')
       document.body.appendChild(textarea)
-      // 隐藏此输入框
-      textarea.style.position = 'absolute'
-      textarea.style.top = '-9999'
-      textarea.style.display = 'none'
       // 赋值
       textarea.value = binding.value
       // 选中
       textarea.select()
       // 复制
       document.execCommand('copy', true)
+      // 隐藏此输入框
+      textarea.style.position = 'absolute'
+      textarea.style.top = '-9999'
+      textarea.style.display = 'none'
       ElMessage({
         message: '已复制到粘贴板！',
         type: 'success'
